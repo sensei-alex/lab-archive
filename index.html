@@ -6,6 +6,10 @@
     <script src="https://cdn.jsdelivr.net/npm/xterm@5.3.0/lib/xterm.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm@5.3.0/css/xterm.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@xterm/addon-fit@0.10.0/lib/addon-fit.min.js"></script>
+    <script src="./codemirror.js"></script>
+    <link rel="stylesheet" href="./codemirror.css">
+    <link rel="stylesheet" href="./themes/mocha.css">
+    <script src="./clike.js"></script>
     <style>
         /* jetbrains-mono-latin-400-normal */
         @font-face {
@@ -29,18 +33,36 @@
             overflow-x: hidden;
             background: #1e1e2e;
             color: #cdd6f4;
+            display: flex;
+        }
+        .CodeMirror {
+            font-size: 16px;
+            width: 50%;
         }
     </style>
 </head>
 <body>
-    <div id="terminal"></div>
     <textarea id="editor" placeholder="in the box: ~/example.c"></textarea>
+    <div id="terminal"></div>
 </body>
 <script>
     const ui = {
         terminal: document.getElementById("terminal"),
         editor: document.getElementById("editor"),
     }
+
+    const editor = CodeMirror.fromTextArea(ui.editor)
+    editor.setOption("theme", "ctp-mocha")
+    editor.setOption("indentUnit", 4)
+    editor.setOption("mode", "text/x-csrc")
+    editor.setOption("lineNumbers", true)
+    editor.setOption("value", `#include <stdio.h>
+
+int main() {
+    printf("Hello, world!");
+    return 0;
+}
+`)
 
     const terminal = new Terminal({
         fontFamily: "JetBrainsMono, monospace",
@@ -136,9 +158,9 @@
         const bytes = await emulator.read_file(path);
         const text = new TextDecoder().decode(bytes);
 
-        ui.editor.value = text
+        editor.doc.setValue(text)
     }
-    ui.editor.addEventListener("blur", event => writeFile("/root/example.c", event.target.value))
+    editor.on("blur", event => writeFile("/root/example.c", editor.doc.getValue()))
     emulator.add_listener("9p-write-end", args => {
         if (args[0] !== "example.c") {
             return
