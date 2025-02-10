@@ -10,4 +10,3 @@ licensed under [MIT](https://github.com/codemirror/codemirror5/blob/master/LICEN
 
 `themes` are downloaded from [catppuccin for codemirror](https://github.com/catppuccin/codemirror)
 licensed under [MIT](https://github.com/catppuccin/codemirror/blob/main/LICENSE).
-
