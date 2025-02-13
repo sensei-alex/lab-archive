@@ -68,7 +68,7 @@
       `#include <stdio.h>
 
 int main() {
-    printf("Hello, world!");
+    printf("Hello, world!\\n");
     return 0;
 }
 `,
@@ -133,7 +133,6 @@ int main() {
     });
     emulator.add_listener("emulator-started", () => {
       fitAddon.fit();
-      run("export TERM=xterm-256color");
       run(`stty rows ${terminal.rows} cols ${terminal.cols}`);
 
       run("clear");
