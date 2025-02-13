@@ -56,16 +56,76 @@
         height: 100vh;
         min-height: 100vh;
         max-height: 100vh;
-        grid-template-columns: 1fr 1fr;
+        font-size: 16px;
+        grid-template-columns: 6rem 1fr 1fr;
       }
       .CodeMirror {
         font-size: 16px;
         margin: 0;
         height: auto;
+        border-right: 0.125rem solid #11111b;
+      }
+      #terminal {
+        margin-left: 1ch;
+      }
+      li {
+        list-style: none;
+        background: #1e1e2e;
+        aspect-ratio: 1;
+        border-radius: 0.62rem;
+        border: 0.125rem solid #11111b;
+      }
+      li.active {
+        border-color: #b4befe;
+      }
+      ul {
+        margin: 0;
+        padding: 0.8rem;
+        gap: 0.8rem;
+        display: flex;
+        flex-direction: column;
+      }
+      nav {
+        background: #181825;
+        padding: 0rem;
+        overflow: auto;
+      }
+      a {
+        color: #74c7ec;
       }
     </style>
   </head>
   <body>
+    <nav>
+      <ul>
+        <li class="active">
+          <a href="/linux-basics">
+            <!-- todo insert svgs -->
+          </a>
+        </li>
+        <li>
+          <a href="/c"></a>
+        </li>
+        <li>
+          <a href="/linux-mid"></a>
+        </li>
+        <li>
+          <a href="/linux"></a>
+        </li>
+        <li>
+          <a href="/embedded"></a>
+        </li>
+        <li>
+          <a href="/networking"></a>
+        </li>
+        <li>
+          <a href="/web"></a>
+        </li>
+        <li>
+          <a href="/js-ecosystem"></a>
+        </li>
+      </ul>
+    </nav>
     <textarea id="editor" placeholder="in the box: ~/example.c"></textarea>
     <div id="terminal"></div>
   </body>
