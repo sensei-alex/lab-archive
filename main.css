@@ -126,15 +126,18 @@ li.active > a {
 
   --base: #1e1e2e;
   --mantle: #181825;
-  --surface1: #bac2de;
+  --surface1: #45475a;
+  --overlay0: #6c7086;
   --text: #cdd6f4;
   --subtext0: #a6adc8;
+  --subtext1: #bac2de;
   --stroke: #11111b !important;
   --yellow: #f9e2af;
   --blue: #89b4fa;
   --sapphire: #74c7ec;
   --sky: #89dceb;
   --teal: #94e2d5;
+  --green: #a6e3a1;
 }
 li > a {
   display: block;
@@ -148,15 +151,19 @@ li > a {
   transition: 0.2s ease-out;
 
   --base: #1e1e2e;
-  --mantle: transparent;
-  --surface1: transparent;
-  --text: transparent;
+  --mantle: #1e1e2e;
+  --surface1: #1e1e2e;
+  --overlay0: #1e1e2e;
+  --text: #1e1e2e;
+  --subtext0: #1e1e2e;
+  --subtext1: #1e1e2e;
   --stroke: #cdd6f4;
-  --yellow: transparent;
-  --blue: transparent;
-  --sapphire: transparent;
-  --sky: transparent;
-  --teal: transparent;
+  --yellow: #1e1e2e;
+  --blue: #1e1e2e;
+  --sapphire: #1e1e2e;
+  --sky: #1e1e2e;
+  --teal: #1e1e2e;
+  --green: #1e1e2e;
 
   &:hover {
     transform: scale(0.95);
