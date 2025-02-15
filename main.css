@@ -43,6 +43,7 @@ body {
   max-height: 100vh;
   font-size: 16px;
   grid-template-columns: 6rem 1fr 1fr;
+  --svg-color: #cdd6f4;
 }
 .CodeMirror {
   font-size: 16px;
@@ -55,13 +56,39 @@ body {
 }
 li {
   list-style: none;
+}
+li.active > a {
+  border-color: #181825;
+
+  --mantle: #181825;
+  --surface1: #bac2de;
+  --text: #cdd6f4;
+  --subtext0: #a6adc8;
+  --stroke: #11111b !important;
+  --yellow: #f9e2af;
+}
+li > a {
+  display: block;
   background: #1e1e2e;
-  aspect-ratio: 1;
+  width: 4rem;
+  height: 4rem;
   border-radius: 0.62rem;
   border: 0.125rem solid #11111b;
-}
-li.active {
-  border-color: #b4befe;
+  background-size: contain;
+  color: transparent;
+  transition: 0.2s ease-out;
+
+  --mantle: transparent;
+  --surface1: transparent;
+  --text: transparent;
+  --stroke: #cdd6f4;
+  --yellow: transparent;
+
+  &:hover {
+    transform: scale(0.95);
+    border-color: #89dceb;
+    --stroke: #89dceb;
+  }
 }
 ul {
   margin: 0;
