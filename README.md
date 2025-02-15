@@ -11,6 +11,19 @@ licensed under [MIT](https://github.com/codemirror/codemirror5/blob/master/LICEN
 `themes` are downloaded from [catppuccin for codemirror](https://github.com/catppuccin/codemirror)
 licensed under [MIT](https://github.com/catppuccin/codemirror/blob/main/LICENSE).
 
+## Course structure
+
+Course -> Area -> Project -> Task
+
+Areas:
+
+- Linux (writing)
+- C / C++
+- Embedded development
+- Bash scripting
+- Networking
+- Web
+
 ## VM interface
 
 There is a global `vm` object which has:
