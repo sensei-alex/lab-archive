@@ -124,12 +124,17 @@ li {
 li.active > a {
   border-color: #181825;
 
+  --base: #1e1e2e;
   --mantle: #181825;
   --surface1: #bac2de;
   --text: #cdd6f4;
   --subtext0: #a6adc8;
   --stroke: #11111b !important;
   --yellow: #f9e2af;
+  --blue: #89b4fa;
+  --sapphire: #74c7ec;
+  --sky: #89dceb;
+  --teal: #94e2d5;
 }
 li > a {
   display: block;
@@ -142,11 +147,16 @@ li > a {
   color: transparent;
   transition: 0.2s ease-out;
 
+  --base: #1e1e2e;
   --mantle: transparent;
   --surface1: transparent;
   --text: transparent;
   --stroke: #cdd6f4;
   --yellow: transparent;
+  --blue: transparent;
+  --sapphire: transparent;
+  --sky: transparent;
+  --teal: transparent;
 
   &:hover {
     transform: scale(0.95);
