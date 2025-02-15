@@ -72,9 +72,22 @@ const emulator = new V86({
 });
 
 // set up terminal
+const vm = {
+  send(command) {
+    emulator.serial0_send(command + "\n");
+  },
+  receivers: [],
+  bindReceiver(fn) {
+    vm.receivers.push(fn);
+  },
+  screen: "",
+};
 emulator.add_listener("serial0-output-byte", (byte) => {
   const char = String.fromCharCode(byte);
+  vm.screen += char;
+
   terminal.write(char);
+  vm.receivers.forEach((fn) => fn(char));
 });
 emulator.add_listener("emulator-started", () => {
   fitAddon.fit();

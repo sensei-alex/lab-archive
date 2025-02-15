@@ -10,3 +10,11 @@ licensed under [MIT](https://github.com/codemirror/codemirror5/blob/master/LICEN
 
 `themes` are downloaded from [catppuccin for codemirror](https://github.com/catppuccin/codemirror)
 licensed under [MIT](https://github.com/catppuccin/codemirror/blob/main/LICENSE).
+
+## VM interface
+
+There is a global `vm` object which has:
+
+- `send(command: string): void` and runs it immediately
+- `screen: string` shows the output since the start of the VM
+- `bindReceiver(fn: (char: string) => void): void` will call the receiver when a character is printed
