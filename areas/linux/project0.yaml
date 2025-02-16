@@ -1,0 +1,124 @@
+---
+name: The filesystem
+layout: terminal
+
+files:
+  - path: "/tmp/lab.txt"
+    text: "Hello, world!"
+
+tasks:
+  - english: |
+      The root folder (called `/`) contains everything:
+      the operating system files, programs, your data, settings, devices, etc,
+      organized in subfolders.
+
+      *Everything* in a Linux system *is a file*. Most important for us are:
+
+      - *regular files* tht store data or programs as text or digits
+      - *directories* (or folders) that hold lists of files
+      - *symlinks* that redirect the reader to other files
+      - *device files* that represent physical hardware
+
+      You can look at the list of them by typing `ls /`
+      (this is the word "list" but without vowels, to make it shorter)
+      and hitting enter.
+    answers:
+      - command: "ls"
+
+  - english: |
+      What you've just typed is called a command.
+      A command is a program, so calling a command means launching an application.
+      Most commands write something to the screen and exit, giving you back the input.
+
+      Notice that every line at which the system expects a command starts with `~ $`.
+      The thing listening for the commands and running them is itself a program called `bash` or shell.
+
+      The shell works with one directory at a time and gives that directory to any command you launch.
+      To see it, run `pwd` (stands for "present working directory").
+    answers:
+      - command: "pwd"
+
+  - english: |
+      The slash in the beginning is the root directory, other slashes are separators.
+      So the directory you are in right now is root -> home -> me. This place is called your home directory.
+      The last part, "me", would normally be your name or nickname.
+      It's says "me" here because I, snsalx, as the owner of this website, can't know your name.
+
+      The first time you ran `ls`, you wanted to list the contents of a *specific directory*.
+      You specified that directory after a space. That's called a *command argument*.
+
+      If you don't give `ls` any arguments, it will use the present working directory. Try that
+    hint: Just type `ls` and press enter
+    answers:
+      - command: "ls"
+
+  - english: |
+      The command printed nothing. That's because the current directory is empty.
+
+      Try changing the present working directory (`cd` command) to `/` and look at its contents
+    hint: You first need to change the directory to the root using `cd /`. Then list its contents using `ls`
+    answers:
+      - commands:
+          - "cd /"
+          - "ls"
+
+  - english: |
+      If you run the cd command without any arguments, it will go to your home directory.
+
+      Try making a new directory in your home (`mkdir` command, the argument is the name of the new directory)
+      and check that it exists using `ls`. Call the directory documents (all lowercase).
+    hint: Run `cd` with no arguments, `mkdir documents`, and then `ls`
+    answers:
+      - commands:
+          - "cd"
+          - "mkdir documents"
+
+  - english: |
+      The "all lowercase" part matters here because if you create `Documents` it will be considired a separate directory.
+
+      Now go into the newly created `documents`.
+    hint: use `cd`
+    answers:
+      - prompt: "~/documents $"
+
+  - english: |
+      Running `cd` like that, with an argument that doesn't start with `/`, navigates relative to the present working directory.
+      That means the last command no longer works, because there is a `documents` folder in `/home/me` but not in `/home/me/documents`.
+
+      Return up relative to this directory using `cd ..`. Up is always called `..`, you could also `ls ..`, for example.
+    answers:
+      - prompt: "~ $"
+
+  - english: |
+      You can chain multiple relative jumps. Since you are now in `/home/me`, you can get to the root by running `cd ../..`.
+
+      This tells the system to go up (`/home`) and up from there (`/`).
+    answers:
+      - prompt: "/ $"
+
+  - english: |
+      Go into the `etc` directory
+    hint: use `cd`
+    answers:
+      - prompt: "/etc $"
+
+  - english: |
+      Another option for navigating the file tree is absolute jumps. Absolute jumps start from `/`, from root.
+      You may recall that your home folder is `/home/me`, so the documents folder created earlier is `/home/me/documents`.
+      The same principles apply to any command, if you were to create a projects directory in `/home/me`, you could run
+      `mkdir /home/me/projects`.
+
+      Return to the documents directory.
+    answers:
+      - prompt: "/documents"
+
+  - english: |
+      Use `cp` to copy `/tmp/lab.txt` into the current directory. It takes 2 arguments: what to copy and where to copy it.
+      Arguments are separated by a space (` `).
+      
+      When referencing the present working directory, you can use the relative path `.`
+    hint: "`cp /etc/apk/repositories .` will copy the file located in `/etc/apk` named `repositories` into the current working directory"
+    answers:
+      - command: "cp /tmp/lab.txt ."
+      - command: "cp /tmp/lab.txt /home/me/documents"
+      
