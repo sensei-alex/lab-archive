@@ -41,7 +41,7 @@ emulator.add_listener("serial0-output-byte", function (byte) {
     console.log("Saving initial state...");
 
     emulator.serial0_send(
-      "ash\nexport TERM=xterm-256color;sync;echo 3 >/proc/sys/vm/drop_caches\n",
+      "sync;echo 3 >/proc/sys/vm/drop_caches\nsu me\ncd\nsudo ls\nhunter2\nexport TERM=xterm-256color;rm .ash_history\n",
     );
 
     setTimeout(async function () {
