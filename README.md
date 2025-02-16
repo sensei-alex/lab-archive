@@ -1,3 +1,6 @@
+## Project status
+Work in progress, please don't use yet
+
 ## Libraries used
 
 All binary files, the `images` directory, and the `libv86.js` are taken from [copy's v86](https://github.com/copy/v86)
