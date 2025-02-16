@@ -44,10 +44,10 @@ body {
   overflow: hidden;
   font-size: 16px;
   grid-template-areas:
-    "nav code term"
-    "nav code task";
-  grid-template-columns: 6rem 1fr 1fr;
-  grid-template-rows: 1fr auto;
+    "nav code task"
+    "nav code term";
+  grid-template-columns: 6rem 1fr 80ch;
+  grid-template-rows: auto 1fr;
   font-family: "JetBrainsMono", monospace;
   --svg-color: #cdd6f4;
 }
@@ -67,7 +67,7 @@ body {
   grid-area: task;
   padding: 1em;
   height: fit-content;
-  border-top: 0.125rem solid #11111b;
+  border-bottom: 0.125rem solid #11111b;
   background: #1e1e2e;
 
   & > h1 {
@@ -92,7 +92,7 @@ body {
 
   & code {
     background: #313244;
-    display: inline-block;
+    display: inline;
     padding: 0.5ch;
     margin: 0.5ch;
     min-width: 1ch;

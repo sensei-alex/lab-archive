@@ -9,12 +9,19 @@ const TASK_UI = {
 };
 
 let project;
-const params = getParams();
+let params = getParams();
 initialProjectLoad();
 async function initialProjectLoad() {
   project = await loadProject(params.area, params.project);
   updateUI(project, params.task);
 }
+
+TASK_UI.controls.next.addEventListener("click", async () => {
+  const task = params.task + 1;
+
+  setParams({...params, task})
+  updateUI(project, task);
+})
 
 async function loadProject(area, projectID) {
   const url = "/areas/" + area + "/" + projectID + ".yaml";
@@ -49,13 +56,14 @@ function getParams() {
 
   return {
     area: search.get("area") || "linux",
-    project: search.get("project") || "0",
-    task: search.get("task") || "0",
+    project: +search.get("project") || 0,
+    task: +search.get("task") || 0,
   };
 }
 
-function setParams(params) {
+function setParams(update) {
   const url = new URL(window.location.href);
-  Object.entries(params).forEach((param) => url.searchParams.set(...param));
+  Object.entries(update).forEach((param) => url.searchParams.set(...param));
   window.history.pushState(null, "", url); // prevent reload
+  params = update;
 }
