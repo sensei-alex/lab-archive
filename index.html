@@ -19,6 +19,8 @@
     <script src="./clike.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   </head>
   <body>
     <nav>
@@ -947,11 +949,15 @@
     <textarea id="editor" placeholder="in the box: ~/example.c"></textarea>
 
     <div id="task">
-      <h1>Project 0 / <span class="task">Task 0</span></h1>
-      <p>This is the place where tasks will go</p>
-      <div class="buttons">
-        <button class="unsolved">Hint</button>
-        <a href="#next">Next</a>
+      <h1 id="task__title">
+        <span class="task">Step 0/60</span> - The filesystem
+      </h1>
+      <div id="task__text">
+        <p>This is the place where tasks will go</p>
+      </div>
+      <div class="buttons" id="task-controls">
+        <button id="task-controls__hint">Hint</button>
+        <button id="task-controls__next">Next</button>
       </div>
     </div>
     <div id="terminal"></div>

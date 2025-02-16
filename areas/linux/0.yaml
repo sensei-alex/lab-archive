@@ -114,11 +114,10 @@ tasks:
 
   - english: |
       Use `cp` to copy `/tmp/lab.txt` into the current directory. It takes 2 arguments: what to copy and where to copy it.
-      Arguments are separated by a space (` `).
-      
+      Arguments are separated by a space.
+
       When referencing the present working directory, you can use the relative path `.`
     hint: "`cp /etc/apk/repositories .` will copy the file located in `/etc/apk` named `repositories` into the current working directory"
     answers:
       - command: "cp /tmp/lab.txt ."
       - command: "cp /tmp/lab.txt /home/me/documents"
-      

@@ -1,9 +1,9 @@
-const ui = {
+const VM_UI = {
   terminal: document.getElementById("terminal"),
   editor: document.getElementById("editor"),
 };
 
-const editor = CodeMirror.fromTextArea(ui.editor);
+const editor = CodeMirror.fromTextArea(VM_UI.editor);
 editor.setOption("theme", "ctp-mocha");
 editor.setOption("indentUnit", 4);
 editor.setOption("mode", "text/x-csrc");
@@ -48,7 +48,7 @@ const terminal = new Terminal({
 });
 const fitAddon = new FitAddon.FitAddon();
 terminal.loadAddon(fitAddon);
-terminal.open(ui.terminal);
+terminal.open(VM_UI.terminal);
 terminal.write("Loading...\n\n");
 
 const emulator = new V86({
@@ -76,6 +76,10 @@ const vm = {
   send(command) {
     emulator.serial0_send(command + "\n");
   },
+  resize() {
+    fitAddon.fit();
+    run(`stty rows ${terminal.rows} cols ${terminal.cols}`);
+  },
   receivers: [],
   bindReceiver(fn) {
     vm.receivers.push(fn);
@@ -90,8 +94,7 @@ emulator.add_listener("serial0-output-byte", (byte) => {
   vm.receivers.forEach((fn) => fn(char));
 });
 emulator.add_listener("emulator-started", () => {
-  fitAddon.fit();
-  run(`stty rows ${terminal.rows} cols ${terminal.cols}`);
+  vm.resize();
 
   run("clear");
 });
@@ -113,7 +116,7 @@ function writeFile(path, data) {
   const idx = emulator.fs9p.SearchPath(path).id;
 
   if (idx === -1) {
-    emulator.create_file(path, new Uint8Array([]));
+    emulator.create_file(path, new VM_UInt8Array([]));
 
     writeFile(path, data);
     return;
