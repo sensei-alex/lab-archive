@@ -1,4 +1,4 @@
-## Work in progress lab platform
+## Libraries used
 
 All binary files, the `images` directory, and the `libv86.js` are taken from [copy's v86](https://github.com/copy/v86)
 which is under the [Simplified BSD License](https://github.com/copy/v86/blob/master/LICENSE).
@@ -13,7 +13,14 @@ licensed under [MIT](https://github.com/catppuccin/codemirror/blob/main/LICENSE)
 
 ## Course structure
 
-Course -> Area -> Project -> Task
+```mermaid
+flowchart TD
+Course --> Area
+Area --> Project
+Area --> Lesson
+Project --> Task
+Lesson --> Step
+```
 
 Areas:
 
