@@ -14,7 +14,7 @@ tasks:
 
       *Everything* in a Linux system *is a file*. Most important for us are:
 
-      - *regular files* tht store data or programs as text or digits
+      - *regular files* that store data or programs as text or digits
       - *directories* (or folders) that hold lists of files
       - *symlinks* that redirect the reader to other files
       - *device files* that represent physical hardware
