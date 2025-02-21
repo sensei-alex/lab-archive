@@ -153,9 +153,11 @@ nav {
     --surface1: #45475a;
     --overlay0: #6c7086;
     --text: #cdd6f4;
+    --text-visible: #cdd6f4;
     --subtext0: #a6adc8;
     --subtext1: #bac2de;
     --stroke: #11111b !important;
+    --stroke-invisible: #11111b !important;
     --yellow: #f9e2af;
     --blue: #89b4fa;
     --sapphire: #74c7ec;
@@ -179,9 +181,11 @@ nav {
     --surface1: #1e1e2e;
     --overlay0: #1e1e2e;
     --text: #1e1e2e;
+    --text-visible: #cdd6f4;
     --subtext0: #1e1e2e;
     --subtext1: #1e1e2e;
     --stroke: #cdd6f4;
+    --stroke-invisible: #1e1e2e;
     --yellow: #1e1e2e;
     --blue: #1e1e2e;
     --sapphire: #1e1e2e;
@@ -193,6 +197,7 @@ nav {
       transform: scale(0.95);
       border-color: #89dceb;
       --stroke: #89dceb;
+      --text-visible: #89dceb;
     }
   }
   & ul {
