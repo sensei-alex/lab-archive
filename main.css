@@ -177,27 +177,34 @@ nav {
     transition: 0.2s ease-out;
 
     --base: #1e1e2e;
-    --mantle: #1e1e2e;
+    --mantle: transparent;
     --surface1: #1e1e2e;
     --overlay0: #1e1e2e;
-    --text: #1e1e2e;
+    --text: transparent;
     --text-visible: #cdd6f4;
     --subtext0: #1e1e2e;
     --subtext1: #1e1e2e;
     --stroke: #cdd6f4;
-    --stroke-invisible: #1e1e2e;
+    --stroke-invisible: transparent;
     --yellow: #1e1e2e;
     --blue: #1e1e2e;
     --sapphire: #1e1e2e;
     --sky: #1e1e2e;
     --teal: #1e1e2e;
-    --green: #1e1e2e;
+    --green: transparent;
 
     &:hover {
       transform: scale(0.95);
       border-color: #89dceb;
       --stroke: #89dceb;
       --text-visible: #89dceb;
+    }
+
+    & > svg {
+      background-color: var(--base);
+      border-radius: inherit;
+      width: 100%;
+      height: 100%;
     }
   }
   & ul {
