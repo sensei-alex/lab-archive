@@ -150,6 +150,7 @@ nav {
 
     --base: #1e1e2e;
     --mantle: #181825;
+    --crust: #11111b;
     --surface1: #45475a;
     --overlay0: #6c7086;
     --text: #cdd6f4;
@@ -178,6 +179,7 @@ nav {
 
     --base: #1e1e2e;
     --mantle: transparent;
+    --crust: transparent;
     --surface1: #1e1e2e;
     --overlay0: #1e1e2e;
     --text: transparent;
