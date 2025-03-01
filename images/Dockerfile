@@ -1,4 +1,4 @@
-FROM i386/alpine:latest
+FROM i386/alpine:edge
 
 # Bootstrap the system
 ENV KERNEL=virt
@@ -17,5 +17,5 @@ RUN adduser me wheel
 RUN echo "%wheel ALL=(ALL:ALL) ALL" >> /etc/sudoers
 
 # Set up the environment
-RUN apk add vim gcc clang-extra-tools bash
+RUN apk add vim bash gcc musl-dev
 

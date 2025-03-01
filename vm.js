@@ -49,7 +49,7 @@ const terminal = new Terminal({
 const fitAddon = new FitAddon.FitAddon();
 terminal.loadAddon(fitAddon);
 terminal.open(VM_UI.terminal);
-terminal.write("Loading...\n\n");
+terminal.writeln("Downloading system files");
 
 const emulator = new V86({
   wasm_path: "/deps/v86/v86.wasm",
@@ -68,7 +68,7 @@ const emulator = new V86({
   bzimage_initrd_from_filesystem: true,
   cmdline:
     "rw root=host9p rootfstype=9p rootflags=trans=virtio,cache=loose modules=virtio_pci tsc=reliable",
-  initial_state: { url: "/images/dist/alpine-state.bin" },
+  initial_state: { url: "/images/dist/alpine-state.bin.zst" }, // from 1.37m to 41s
 });
 
 // set up terminal
@@ -107,12 +107,15 @@ const vm = {
   silent: true,
   async mute() {
     vm.silent = true;
+    VM_UI.terminal.style.filter = "opacity(0.2)";
     await vm.run("history -w");
   },
   async unmute() {
     await vm.run("history -c;history -r");
+    VM_UI.terminal.style.filter = "unset";
     vm.silent = false;
   },
+  downloadProgress: 0,
 };
 emulator.add_listener("serial0-output-byte", (byte) => {
   const char = String.fromCharCode(byte);
@@ -160,12 +163,33 @@ async function readFile(path) {
   return new TextDecoder().decode(bytes);
 }
 editor.on("blur", () => writeFile("/home/me/example.c", editor.doc.getValue()));
-emulator.add_listener("9p-write-end", (args) => {
+emulator.add_listener("9p-write-end", async (args) => {
   if (args[0] !== "example.c") {
     return;
   }
-  const data = readFile("/home/me/example.c");
+  const data = await readFile("/home/me/example.c");
   editor.doc.setValue(data);
+});
+emulator.add_listener("download-progress", (event) => {
+  const progress = event.loaded / event.total;
+  if (!Number.isFinite(progress)) return;
+
+  const bars = Math.ceil((terminal.cols - 2) * progress);
+
+  if (bars < vm.downloadProgress) {
+    vm.downloadProgress = bars;
+  }
+  if (bars == vm.downloadProgress) return;
+
+  vm.downloadProgress = bars;
+  terminal.write("\x1b[2;1H" + "#".repeat(bars) + " ".repeat(terminal.cols));
+  terminal.write(
+    "\x1b[1;" +
+      "Downloading system files ".length +
+      "H: " +
+      Math.floor(progress * 100) +
+      "% ",
+  );
 });
 
 // Fix the ctrl+shift+c behavior
