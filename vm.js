@@ -81,11 +81,11 @@ const vm = {
     return new Promise((resolve) => {
       vm.bindReceiver(receiverId, (char) => {
         if (vm.screen.endsWith("$ ") || vm.screen.endsWith("# ")) {
-          vm.unbindReceiver(receiverId)
-          resolve()
+          vm.unbindReceiver(receiverId);
+          resolve();
         }
-      })
-    })
+      });
+    });
   },
   async resize() {
     fitAddon.fit();
@@ -107,16 +107,16 @@ const vm = {
   silent: true,
   async mute() {
     vm.silent = true;
-    await vm.run("history -w")
+    await vm.run("history -w");
   },
   async unmute() {
-    await vm.run("history -c;history -r")
+    await vm.run("history -c;history -r");
     vm.silent = false;
   },
 };
 emulator.add_listener("serial0-output-byte", (byte) => {
   const char = String.fromCharCode(byte);
-  
+
   vm.screen += char;
   Object.values(vm.receivers).forEach((fn) => fn(char));
 });
@@ -128,7 +128,7 @@ emulator.add_listener("emulator-started", async () => {
 
   // clear screen
   await vm.mute();
-  await vm.run("rm .bash_history")
+  await vm.run("rm .bash_history");
   await vm.unmute();
 });
 terminal.onData((data) => emulator.serial0_send(data));
@@ -147,21 +147,19 @@ emulator.add_listener("net0-send", (packet) => broadcast.postMessage(packet));
 // set up file sharing
 async function writeFile(path, data) {
   const lastSlash = path.lastIndexOf("/");
-  const directory = path.substring(0, lastSlash)
+  const directory = path.substring(0, lastSlash);
 
-  await vm.mute()
-  await vm.run("rm " + path)
-  await vm.run("mkdir -p " + directory)
+  await vm.mute();
+  await vm.run("rm " + path);
+  await vm.run("mkdir -p " + directory);
   emulator.create_file(path, new TextEncoder().encode(data + "\n"));
-  await vm.unmute()
+  await vm.unmute();
 }
 async function readFile(path) {
   const bytes = await emulator.read_file(path);
   return new TextDecoder().decode(bytes);
 }
-editor.on("blur", () =>
-  writeFile("/home/me/example.c", editor.doc.getValue()),
-);
+editor.on("blur", () => writeFile("/home/me/example.c", editor.doc.getValue()));
 emulator.add_listener("9p-write-end", (args) => {
   if (args[0] !== "example.c") {
     return;
@@ -171,11 +169,11 @@ emulator.add_listener("9p-write-end", (args) => {
 });
 
 // Fix the ctrl+shift+c behavior
-VM_UI.terminal.addEventListener('keydown', function(event) {
-    if ((event.ctrlKey && event.shiftKey) && event.keyCode === 67) {
-        // Prevent the default behavior (copying)
-        event.preventDefault();
-        const text = terminal.getSelection();
-        navigator.clipboard.writeText(text);
-    }
+VM_UI.terminal.addEventListener("keydown", function (event) {
+  if (event.ctrlKey && event.shiftKey && event.keyCode === 67) {
+    // Prevent the default behavior (copying)
+    event.preventDefault();
+    const text = terminal.getSelection();
+    navigator.clipboard.writeText(text);
+  }
 });
