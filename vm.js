@@ -52,23 +52,23 @@ terminal.open(VM_UI.terminal);
 terminal.write("Loading...\n\n");
 
 const emulator = new V86({
-  wasm_path: "./v86.wasm",
+  wasm_path: "/deps/v86/v86.wasm",
   memory_size: 512 * 1024 * 1024,
   vga_memory_size: 8 * 1024 * 1024,
   disable_keyboard: true,
   disable_mouse: true,
   disable_speaker: true,
-  bios: { url: "./seabios.bin" },
-  vga_bios: { url: "./vgabios.bin" },
+  bios: { url: "/deps/v86/seabios.bin" },
+  vga_bios: { url: "/deps/v86/vgabios.bin" },
   filesystem: {
-    baseurl: "./images/dist/alpine-rootfs-flat",
-    basefs: "./images/dist/alpine-fs.json",
+    baseurl: "/images/dist/alpine-rootfs-flat",
+    basefs: "/images/dist/alpine-fs.json",
   },
   autostart: true,
   bzimage_initrd_from_filesystem: true,
   cmdline:
     "rw root=host9p rootfstype=9p rootflags=trans=virtio,cache=loose modules=virtio_pci tsc=reliable",
-  initial_state: { url: "./images/dist/alpine-state.bin" },
+  initial_state: { url: "/images/dist/alpine-state.bin" },
 });
 
 // set up terminal
