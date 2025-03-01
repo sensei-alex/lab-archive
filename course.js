@@ -19,9 +19,9 @@ async function initialProjectLoad() {
 TASK_UI.controls.next.addEventListener("click", async () => {
   const task = params.task + 1;
 
-  setParams({...params, task})
+  setParams({ ...params, task });
   updateUI(project, task);
-})
+});
 
 async function loadProject(area, projectID) {
   const url = "/areas/" + area + "/" + projectID + ".yaml";

@@ -3,7 +3,7 @@ name: The filesystem
 layout: terminal
 
 files:
-  - path: "/tmp/lab.txt"
+  - path: "/lab/lab.txt"
     text: "Hello, world!"
 
 tasks:
