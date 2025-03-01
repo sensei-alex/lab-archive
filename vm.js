@@ -169,3 +169,13 @@ emulator.add_listener("9p-write-end", (args) => {
   const data = readFile("/home/me/example.c");
   editor.doc.setValue(data);
 });
+
+// Fix the ctrl+shift+c behavior
+VM_UI.terminal.addEventListener('keydown', function(event) {
+    if ((event.ctrlKey && event.shiftKey) && event.keyCode === 67) {
+        // Prevent the default behavior (copying)
+        event.preventDefault();
+        const text = terminal.getSelection();
+        navigator.clipboard.writeText(text);
+    }
+});
