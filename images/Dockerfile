@@ -17,5 +17,5 @@ RUN adduser me wheel
 RUN echo "%wheel ALL=(ALL:ALL) ALL" >> /etc/sudoers
 
 # Set up the environment
-RUN apk add vim gcc clang-extra-tools
+RUN apk add vim gcc clang-extra-tools bash
 

@@ -73,30 +73,63 @@ const emulator = new V86({
 
 // set up terminal
 const vm = {
-  send(command) {
+  async run(command) {
     emulator.serial0_send(command + "\n");
+
+    const receiverId = crypto.randomUUID();
+
+    return new Promise((resolve) => {
+      vm.bindReceiver(receiverId, (char) => {
+        if (vm.screen.endsWith("$ ") || vm.screen.endsWith("# ")) {
+          vm.unbindReceiver(receiverId)
+          resolve()
+        }
+      })
+    })
   },
-  resize() {
+  async resize() {
     fitAddon.fit();
-    run(`stty rows ${terminal.rows} cols ${terminal.cols}`);
+    await vm.run(`stty rows ${terminal.rows} cols ${terminal.cols}`);
   },
-  receivers: [],
-  bindReceiver(fn) {
-    vm.receivers.push(fn);
+  receivers: {
+    print: (char) => {
+      if (vm.silent) return;
+      terminal.write(char);
+    },
+  },
+  bindReceiver(id, fn) {
+    vm.receivers[id] = fn;
+  },
+  unbindReceiver(id) {
+    delete vm.receivers[id];
   },
   screen: "",
+  silent: true,
+  async mute() {
+    vm.silent = true;
+    await vm.run("history -w")
+  },
+  async unmute() {
+    await vm.run("history -c;history -r")
+    vm.silent = false;
+  },
 };
 emulator.add_listener("serial0-output-byte", (byte) => {
   const char = String.fromCharCode(byte);
+  
   vm.screen += char;
-
-  terminal.write(char);
-  vm.receivers.forEach((fn) => fn(char));
+  Object.values(vm.receivers).forEach((fn) => fn(char));
 });
-emulator.add_listener("emulator-started", () => {
-  vm.resize();
+emulator.add_listener("emulator-started", async () => {
+  await vm.resize();
 
-  run("clear");
+  await vm.unmute();
+  await vm.run("clear");
+
+  // clear screen
+  await vm.mute();
+  await vm.run("rm .bash_history")
+  await vm.unmute();
 });
 terminal.onData((data) => emulator.serial0_send(data));
 
@@ -112,33 +145,27 @@ broadcast.addEventListener("message", (event) =>
 emulator.add_listener("net0-send", (packet) => broadcast.postMessage(packet));
 
 // set up file sharing
-function writeFile(path, data) {
-  const idx = emulator.fs9p.SearchPath(path).id;
+async function writeFile(path, data) {
+  const lastSlash = path.lastIndexOf("/");
+  const directory = path.substring(0, lastSlash)
 
-  if (idx === -1) {
-    emulator.create_file(path, new VM_UInt8Array([]));
-
-    writeFile(path, data);
-    return;
-  }
-
-  const bytes = new TextEncoder().encode(data + "\n");
-
-  emulator.fs9p.ChangeSize(idx, bytes.length);
-  emulator.fs9p.Write(idx, 0, bytes.length, bytes);
+  await vm.mute()
+  await vm.run("rm " + path)
+  await vm.run("mkdir -p " + directory)
+  emulator.create_file(path, new TextEncoder().encode(data + "\n"));
+  await vm.unmute()
 }
 async function readFile(path) {
   const bytes = await emulator.read_file(path);
-  const text = new TextDecoder().decode(bytes);
-
-  editor.doc.setValue(text);
+  return new TextDecoder().decode(bytes);
 }
-editor.on("blur", (event) =>
-  writeFile("/root/example.c", editor.doc.getValue()),
+editor.on("blur", () =>
+  writeFile("/home/me/example.c", editor.doc.getValue()),
 );
 emulator.add_listener("9p-write-end", (args) => {
   if (args[0] !== "example.c") {
     return;
   }
-  readFile("/root/example.c");
+  const data = readFile("/home/me/example.c");
+  editor.doc.setValue(data);
 });
