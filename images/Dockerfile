@@ -2,7 +2,7 @@ FROM i386/alpine:edge
 
 # Bootstrap the system
 ENV KERNEL=virt
-RUN apk add openrc alpine-base agetty alpine-conf linux-$KERNEL linux-firmware-none sudo
+RUN apk add openrc alpine-base agetty alpine-conf linux-$KERNEL linux-firmware-none sudo bash
 RUN sed -i 's/getty 38400 tty1/agetty --autologin root tty1 linux/' /etc/inittab
 RUN echo 'ttyS0::respawn:/sbin/agetty --autologin root -s ttyS0 115200 vt100' >> /etc/inittab
 RUN echo "root:" | chpasswd
@@ -17,5 +17,5 @@ RUN adduser me wheel
 RUN echo "%wheel ALL=(ALL:ALL) ALL" >> /etc/sudoers
 
 # Set up the environment
-RUN apk add vim bash gcc musl-dev
+# RUN apk add vim gcc musl-dev
 

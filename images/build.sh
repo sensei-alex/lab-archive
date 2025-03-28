@@ -26,4 +26,7 @@ mkdir -p "$OUT_ROOTFS_FLAT"
 
 ./build-state.js
 
+echo compressing
+zstd dist/alpine-state.bin
+
 echo image created
