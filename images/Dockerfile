@@ -17,5 +17,5 @@ RUN adduser me wheel
 RUN echo "%wheel ALL=(ALL:ALL) ALL" >> /etc/sudoers
 
 # Set up the environment
-# RUN apk add vim gcc musl-dev
+RUN apk add git curl rsync # and no man pages to save space
 
