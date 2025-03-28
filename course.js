@@ -3,7 +3,7 @@ const TASK_UI = {
   text: document.getElementById("task__text"),
 
   controls: {
-    hint: document.getElementById("task-controls__hint"),
+    back: document.getElementById("task-controls__back"),
     next: document.getElementById("task-controls__next"),
   },
 };
@@ -15,6 +15,17 @@ async function initialProjectLoad() {
   project = await loadProject(params.area, params.project);
   updateUI(project, params.task);
 }
+
+TASK_UI.controls.back.addEventListener("click", async () => {
+  let task = params.task - 1;
+
+  if (task < 0) {
+    task = 0;
+  }
+
+  setParams({ ...params, task });
+  updateUI(project, task);
+});
 
 TASK_UI.controls.next.addEventListener("click", async () => {
   const task = params.task + 1;
@@ -36,7 +47,7 @@ async function loadProject(area, projectID) {
   return data;
 }
 
-function updateUI(project, taskID) {
+async function updateUI(project, taskID) {
   const task = project.tasks[taskID];
 
   const taskTitle = document.createElement("span");
@@ -48,14 +59,16 @@ function updateUI(project, taskID) {
   TASK_UI.title.appendChild(projectTitle);
 
   TASK_UI.text.innerHTML = marked.parse(task.english);
-  vm.resize();
+  await vm.mute();
+  await vm.resize();
+  await vm.unmute();
 }
 
 function getParams() {
   const search = new URLSearchParams(window.location.search);
 
   return {
-    area: search.get("area") || "linux",
+    area: search.get("area") || "linux-basics",
     project: +search.get("project") || 0,
     task: +search.get("task") || 0,
   };

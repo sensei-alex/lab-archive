@@ -46,6 +46,7 @@ body {
   cursor: pointer;
   display: flex;
   justify-content: center;
+  gap: 1ch;
   align-items: center;
   font-size: inherit;
   font-family: inherit;
@@ -71,3 +72,22 @@ body {
   }
 }
 
+.button-icon {
+  height: 1.618em;
+}
+
+.color-peach {
+  color: #fab387;
+
+  &:hover {
+    border-color: #fab387;
+  }
+}
+
+.color-blue {
+  color: #89b4fa;
+
+  &:hover {
+    border-color: #89b4fa;
+  }
+}

@@ -117,6 +117,7 @@ const vm = {
   },
   downloadProgress: 0,
 };
+
 emulator.add_listener("serial0-output-byte", (byte) => {
   const char = String.fromCharCode(byte);
 
