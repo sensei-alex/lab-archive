@@ -109,6 +109,7 @@ const vm = {
     vm.silent = true;
     VM_UI.terminal.style.filter = "opacity(0.2)";
     await vm.run("history -w");
+    await vm.run("sed '/^history \-w$/d' ~/.bash_history -i")
   },
   async unmute() {
     await vm.run("history -c;history -r");
@@ -125,15 +126,13 @@ emulator.add_listener("serial0-output-byte", (byte) => {
   Object.values(vm.receivers).forEach((fn) => fn(char));
 });
 emulator.add_listener("emulator-started", async () => {
+  await vm.mute();
   await vm.resize();
 
-  await vm.unmute();
-  await vm.run("clear");
-
   // clear screen
-  await vm.mute();
   await vm.run("rm .bash_history");
   await vm.unmute();
+  await vm.run("clear");
 });
 terminal.onData((data) => emulator.serial0_send(data));
 
