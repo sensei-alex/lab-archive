@@ -21,6 +21,7 @@ body {
   grid-area: term;
   padding: 1em;
   min-height: 0;
+  transition: 1s ease-in;
 }
 #task {
   grid-area: task;
