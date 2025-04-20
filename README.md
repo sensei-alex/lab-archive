@@ -1,6 +1,6 @@
 ## Project status
 
-Work in progress, please don't use yet
+Moved to [lab](https://github.com/sensei-alex/lab)
 
 ## Libraries used
 
